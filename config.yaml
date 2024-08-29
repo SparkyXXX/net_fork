@@ -1,0 +1,22 @@
+data:
+  train_path: "./datasets/train"
+  val_path1: "./datasets/train/cats"
+  val_path2: "./datasets/train/dogs"
+  train_batch_size: 100
+  val_batch_size: 1
+  val_num: 10
+
+utils:
+  # process: "train"
+  process: "val"
+  dev: "cuda"
+  dev_id: "0"
+  log_save_path: "./results/log"
+  tb_train_path: "./results/tb/train"
+  tb_val_path: "./results/tb/val"
+
+run:
+  lr: 0.0001
+  train_epoches: 150
+  model_save_path: "./results/model"
+  model_weight_path: "./results/model/test.pth"
