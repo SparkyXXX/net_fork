@@ -88,7 +88,7 @@ def val(args):
 
         with tqdm(total=len(val_loader),
                   desc="Testing",
-                  bar_format="{desc} |{bar}| {elapsed}<{remaining}, {rate_fmt} {postfix}",
+                  bar_format="{desc} |{bar}| {elapsed}<{remaining}, {rate_fmt} {postfix}\n",
                   ncols=70) as t:
             for index, data in enumerate(val_loader):
                 # 读取数据，预测
@@ -100,7 +100,7 @@ def val(args):
 
                 # 更新显示
                 t.update()
-            utils.tensorboard_settings_val(args, dataset["val_img"], predict_results)
+            # utils.tensorboard_settings_val(args, dataset["val_img"], predict_results)
             logging.info("Predict Results: {}".format(predict_class))
 
 
