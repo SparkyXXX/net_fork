@@ -7,7 +7,6 @@ import logging
 import utils
 import prepare
 import models
-import torch
 from torch import nn
 from torch import optim
 from tqdm import tqdm
