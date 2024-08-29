@@ -7,8 +7,8 @@ data:
   val_num: 10
 
 utils:
-  process: "train"
-  # process: "val"
+  # process: "train"
+  # # process: "val"
   dev: "cuda"
   dev_id: "0"
   log_save_path: "./results/log"
@@ -17,6 +17,6 @@ utils:
 
 run:
   lr: 0.0001
-  train_epoches: 150
+  train_epoches: 300
   model_save_path: "./results/model"
-  model_weight_path: "./results/model/test.pth"
+  model_weight_path: "./results/test.pth"

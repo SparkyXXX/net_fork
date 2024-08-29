@@ -24,8 +24,11 @@ def config(args):
     config = load_config(args)
 
     # 日志配置
-    save = args.log
-    if save:
+    log_path = config["utils"]["log_save_path"]
+    if args.delete_log:
+        shutil.rmtree(log_path)
+        os.mkdir(log_path)
+    if args.log_to_file:
         save_path = config["utils"]["log_save_path"]
         if not os.path.exists(save_path):
             os.mkdir(save_path)
@@ -41,7 +44,7 @@ def config(args):
         logging.basicConfig(format='[%(asctime)s %(levelname)s] %(message)s', 
                             datefmt='%Y/%m/%d %H:%M:%S', 
                             level=logging.DEBUG)
-        
+    
     # 设备配置
     dev    = config["utils"]["dev"]
     dev_id = config["utils"]["dev_id"]
@@ -49,12 +52,8 @@ def config(args):
     if dev == "cuda":
         os.environ["CUDA_VISIBLE_DEVICES"] = dev_id
     logging.info("Device: {}-{}".format("GPU" if str(device) == "cuda" else "CPU", dev_id))
-    
-    # 任务选择
-    process = config["utils"]["process"]
-    logging.info("Task: {}".format("Training" if str(process) == "train" else "Validating"))
 
-    return process, device
+    return device
 
 
 def save_model(Net, save_path, del_before):
@@ -99,12 +98,12 @@ def tensorboard_settings_val(args, val_path, net_results):
     config = load_config(args)
     tb_val_path = config["utils"]["tb_val_path"]
     if os.path.exists(tb_val_path):
-            shutil.rmtree(tb_val_path)
-            os.mkdir(tb_val_path)
+        shutil.rmtree(tb_val_path)
+        os.mkdir(tb_val_path)
     else:
         os.mkdir(tb_val_path)
 
-    val_writer = SummaryWriter(val_path)
+    val_writer = SummaryWriter(tb_val_path)
     for index, path in enumerate(val_path):
         val_img = np.array(Image.open(path).convert("RGB").resize((448, 448))).astype(np.uint8)
         val_writer.add_image("Val_Images", val_img, global_step=index, dataformats="HWC")
