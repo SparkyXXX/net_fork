@@ -7,8 +7,6 @@ data:
   val_num: 10
 
 utils:
-  # process: "train"
-  # # process: "val"
   dev: "cuda"
   dev_id: "0"
   log_save_path: "./results/log"
