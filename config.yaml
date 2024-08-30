@@ -17,4 +17,5 @@ run:
   lr: 0.0001
   train_epoches: 300
   model_save_path: "./results/model"
-  model_weight_path: "./results/test.pth"
+  model_weight_path: "./results/model/AlexNet-2024-08-30-06-50-20.pth"
+  # model_weight_path: "./results/test.pth"

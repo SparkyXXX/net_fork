@@ -19,8 +19,7 @@ def train(args):
     train_epoches = config["run"]["train_epoches"]
     model_save_path = config["run"]["model_save_path"]
     tb_workspace = config["utils"]["tb_train_path"]
-    use_tb = args.tensorboard
-    TB = utils.Tensorboard_settings(use_flag=use_tb, work_path=tb_workspace)
+    TB = utils.Tensorboard_settings(work_path=tb_workspace)
     logging.info("Learning Rate: {}".format(lr))
     logging.info("Train Epoches: {}".format(train_epoches))
     logging.info("Model Save Path: {}".format(model_save_path))
@@ -70,7 +69,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("config", type=str, help="AlexNet script")
     parser.add_argument("--log_to_file", action="store_true", help="save log to txt file")
-    parser.add_argument('--tensorboard', action='store_true', help='tensorboard to show training results')
     parser.add_argument('--delete_model', action='store_true', help='delete old training results')
     parser.add_argument('--delete_log', action='store_true', help='delete old log files')
     args = parser.parse_args()

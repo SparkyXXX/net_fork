@@ -71,8 +71,7 @@ def save_model(Net, save_path, del_before):
 
 
 class Tensorboard_settings():
-    def __init__(self, use_flag, work_path):
-        self.use_flag = use_flag
+    def __init__(self, work_path):
         self.workspace = work_path
         self.writer = SummaryWriter(self.workspace, flush_secs=1)
         self.workspace_create(self.workspace)
@@ -84,11 +83,9 @@ class Tensorboard_settings():
         else:
             os.mkdir(path)
 
-    def tensorboard_update(self, loss, epoch):
-        if self.use_flag:
-            self.writer.add_scalar("Loss", loss, epoch, display_name="Training")
-        else:
-            pass
+    def tensorboard_update(self, y, x):
+        self.writer.add_scalar("Loss", y, x, display_name="Training")
+
 
     def tensorboard_save(self):
         self.writer.close()
