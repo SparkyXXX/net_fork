@@ -24,6 +24,7 @@ def config(args):
     config = load_config(args)
 
     # 日志配置
+    # logging.getLogger("PIL").setLevel(logging.ERROR)
     log_path = config["utils"]["log_save_path"]
     if args.delete_log:
         shutil.rmtree(log_path)

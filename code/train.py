@@ -45,8 +45,24 @@ def train(args):
                   bar_format="{desc} |{bar}| {elapsed}<{remaining}, {rate_fmt} {postfix}",
                   ncols=70) as t:
             for step, data in enumerate(train_loader, start=0):
+                logging.info("-------------new batch---------------")
                 # 读取数据，清零梯度，前向传播，计算损失，反向传播，更新梯度，损失累加
                 imgs, labels = data
+                # data为一个list，其中有两个tensor
+                # 一个shape为torch.Size([100, 3, 224, 224])，表示一批100张图片
+                # 另一个shape为torch.Size([100])，表示这100张图片对应的类别(0 or 1)
+                # step 用于标记枚举的轮次
+
+                # 尝试在日志输出中区分每张图片的exif信息
+                # for i in range(imgs.size(0)):
+                    # logging.info(f"-------------separate image {i+1}/{imgs.size(0)} in batch {step}---------------")                    
+                    # img = imgs[i].unsqueeze(0)
+                    # label = labels[i].unsqueeze(0)
+                    # out = MyNet(img.to(device))
+                    # loss = loss_func(out, label.to(device))
+                    # logging.info(f"Processed image {i+1} in batch {step}, label: {label.item()}")
+
+
                 optimizor.zero_grad()
                 out = MyNet(imgs.to(device))
                 loss = loss_func(out, labels.to(device))

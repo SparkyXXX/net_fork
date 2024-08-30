@@ -24,7 +24,7 @@ class custom_val_dataset(Dataset):
     
     def __len__(self):
         return len(self.img_path)
-
+    
 
 def data_loader(config):
     # 读取参数
