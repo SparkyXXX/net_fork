@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 def train(args):
     # 读取参数
-    config = utils.load_config(args)
+    config, device = utils.config(args)
     lr = config["run"]["lr"]
     train_epoches = config["run"]["train_epoches"]
     model_save_path = config["run"]["model_save_path"]
@@ -78,7 +78,6 @@ if __name__ == "__main__":
     parser.add_argument('--delete_model', action='store_true', help='delete old training results')
     parser.add_argument('--delete_log', action='store_true', help='delete old log files')
     args = parser.parse_args()
-    device = utils.config(args)
     
     # 运行
     train(args)

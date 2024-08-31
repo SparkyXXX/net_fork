@@ -13,11 +13,11 @@ from tqdm import tqdm
 
 def val(args):
     # 读取参数
-    config = utils.load_config(args)
+    config, device = utils.config(args)
     model_weight_path = config["run"]["model_weight_path"]
-    logging.info("Weight Path: {}".format(model_weight_path))
     tb_val_path = config["utils"]["tb_val_path"]
     TB = utils.TB_settings(tb_val_path)
+    logging.info("Weight Path: {}".format(model_weight_path))
 
     # 载入数据
     dataset = prepare.data_loader(config)
@@ -59,7 +59,6 @@ if __name__ == "__main__":
     parser.add_argument("--log_to_file", action="store_true", help="save log to txt file")
     parser.add_argument('--delete_log', action='store_true', help='delete old log files')
     args = parser.parse_args()
-    device = utils.config(args)
     
     # 运行
     val(args)

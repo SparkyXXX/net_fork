@@ -13,15 +13,10 @@ from tensorboardX import SummaryWriter
 from PIL import Image
 
 
-def load_config(args):
-    with open(args.config, 'r', encoding='utf-8') as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
-    return config
-
-
 def config(args):
     setproctitle.setproctitle("HuangRuixiang is working ^_^")
-    config = load_config(args)
+    with open(args.config, 'r', encoding='utf-8') as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
 
     # 日志配置
     # logging.getLogger("PIL").setLevel(logging.ERROR)
@@ -53,7 +48,7 @@ def config(args):
         os.environ["CUDA_VISIBLE_DEVICES"] = dev_id
     logging.info("Device: {}-{}".format("GPU" if str(device) == "cuda" else "CPU", dev_id))
 
-    return device
+    return config, device
 
 
 def save_model(Net, save_path, del_before):
@@ -79,11 +74,11 @@ class TB_settings():
     def train_update(self, y, x):
         self.writer.add_scalar("Loss", y, x, display_name="Training")
 
-    def val_update(self, val_img_path, net_results):
+    def val_update(self, val_img_path, reason_results):
         for index, path in enumerate(val_img_path):
             val_img = np.array(Image.open(path).convert("RGB").resize((448, 448))).astype(np.uint8)
-            self.writer.add_image("Val_Images", val_img, global_step=index, dataformats="HWC")
-            self.writer.add_scalar("0-Cats/1-Dogs", net_results[index], index, display_name="Val Results")
+            self.writer.add_image("Val_Images", val_img, global_step=index, dataformats="HWC") # Height Width Channel
+            self.writer.add_scalar("0-Cats/1-Dogs", reason_results[index], index, display_name="Val Results")
 
     def save(self):
         self.writer.close()
