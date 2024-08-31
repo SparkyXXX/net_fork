@@ -1,7 +1,6 @@
 data:
   train_path: "./datasets/train"
-  val_path1: "./datasets/train/cats"
-  val_path2: "./datasets/train/dogs"
+  val_path: "./datasets/val"
   train_batch_size: 100
   val_batch_size: 1
   val_num: 10
@@ -18,4 +17,4 @@ run:
   train_epoches: 300
   model_save_path: "./results/model"
   model_weight_path: "./results/model/AlexNet-2024-08-30-06-50-20.pth"
-  # model_weight_path: "./results/test.pth"
+  # model_weight_path: "./results/test_alexnet.pth"

@@ -16,13 +16,15 @@ def val(args):
     config = utils.load_config(args)
     model_weight_path = config["run"]["model_weight_path"]
     logging.info("Weight Path: {}".format(model_weight_path))
+    tb_val_path = config["utils"]["tb_val_path"]
+    TB = utils.TB_settings(tb_val_path)
 
     # 载入数据
     dataset = prepare.data_loader(config)
     val_loader = dataset["valset"]
 
     # 实例化网络并载入
-    MyNet = models.alexnet(num_class=2)
+    MyNet = models.alexnet(num_classes=2)
     MyNet.load_state_dict(torch.load(model_weight_path, map_location=device))
     MyNet.eval()
 
@@ -45,9 +47,9 @@ def val(args):
 
                 # 更新显示
                 t.update()
-        utils.tensorboard_settings_val(args, dataset["val_img"], predict_results)
+        TB.val_update(dataset["val_img"], predict_results)
+        TB.save()
         logging.info("Predict Results: {}".format(predict_class))
-
 
 
 if __name__ == "__main__":

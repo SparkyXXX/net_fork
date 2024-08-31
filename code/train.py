@@ -18,8 +18,8 @@ def train(args):
     lr = config["run"]["lr"]
     train_epoches = config["run"]["train_epoches"]
     model_save_path = config["run"]["model_save_path"]
-    tb_workspace = config["utils"]["tb_train_path"]
-    TB = utils.Tensorboard_settings(work_path=tb_workspace)
+    tb_train_path = config["utils"]["tb_train_path"]
+    TB = utils.TB_settings(work_path=tb_train_path)
     logging.info("Learning Rate: {}".format(lr))
     logging.info("Train Epoches: {}".format(train_epoches))
     logging.info("Model Save Path: {}".format(model_save_path))
@@ -29,7 +29,7 @@ def train(args):
     train_loader = dataset["trainset"]
 
     # 实例化网络、损失函数、优化器
-    MyNet = models.alexnet(num_class=2)
+    MyNet = models.alexnet(num_classes=2)
     MyNet.to(device)
     loss_func = nn.CrossEntropyLoss()
     optimizor = optim.Adam(MyNet.parameters(), lr)
@@ -52,17 +52,7 @@ def train(args):
                 # 一个shape为torch.Size([100, 3, 224, 224])，表示一批100张图片
                 # 另一个shape为torch.Size([100])，表示这100张图片对应的类别(0 or 1)
                 # step 用于标记枚举的轮次
-
-                # 尝试在日志输出中区分每张图片的exif信息
-                # for i in range(imgs.size(0)):
-                    # logging.info(f"-------------separate image {i+1}/{imgs.size(0)} in batch {step}---------------")                    
-                    # img = imgs[i].unsqueeze(0)
-                    # label = labels[i].unsqueeze(0)
-                    # out = MyNet(img.to(device))
-                    # loss = loss_func(out, label.to(device))
-                    # logging.info(f"Processed image {i+1} in batch {step}, label: {label.item()}")
-
-
+                
                 optimizor.zero_grad()
                 out = MyNet(imgs.to(device))
                 loss = loss_func(out, labels.to(device))
@@ -73,8 +63,8 @@ def train(args):
                 # 更新显示
                 t.set_postfix_str("Loss:{:^7.3f}".format(loss))
                 t.update()
-                TB.tensorboard_update(loss, count)
-                TB.tensorboard_save()
+                TB.train_update(loss, count)
+                TB.save()
                 count += 1
             utils.save_model(MyNet, model_save_path, del_before=args.delete_model)
     tqdm.write("\nTrain Finish!\n")

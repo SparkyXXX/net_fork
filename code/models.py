@@ -4,11 +4,11 @@
 
 import torch.nn as nn
 
-def alexnet(num_class):
-    return AlexNet(num_class)
+def alexnet(num_classes):
+    return AlexNet(num_classes)
 
 class AlexNet(nn.Module):
-    def __init__(self, num_class):
+    def __init__(self, num_classes):
         super().__init__()
 
         #######################第一层############################
@@ -97,7 +97,7 @@ class AlexNet(nn.Module):
         #######################第八层############################
         #输入尺寸4096，输出尺寸100
         self.Layer8_fc = nn.Linear(in_features=4096, 
-                                out_features=num_class,
+                                out_features=num_classes,
                                 bias=True)
 
     #做一个特征图-全连接的Tensor尺度转换
@@ -147,4 +147,3 @@ class AlexNet(nn.Module):
         x = self.Layer8_fc(x)
 
         return x
-    

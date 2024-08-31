@@ -24,13 +24,12 @@ class custom_val_dataset(Dataset):
     
     def __len__(self):
         return len(self.img_path)
-    
+
 
 def data_loader(config):
     # 读取参数
     train_path       = config["data"]["train_path"]
-    val_img_path1    = config["data"]["val_path1"]
-    val_img_path2    = config["data"]["val_path2"]
+    val_img_path    = config["data"]["val_path"]
     train_batch_size = config["data"]["train_batch_size"]
     val_batch_size   = config["data"]["val_batch_size"]
     val_num          = config["data"]["val_num"]
@@ -48,9 +47,7 @@ def data_loader(config):
              transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])}
 
     # 生成验证集
-    val_path = list(Path(val_img_path1).iterdir())
-    temp_path = list(Path(val_img_path2).iterdir())
-    val_path.extend(temp_path)
+    val_path = list(Path(val_img_path).iterdir())
     random.shuffle(val_path)
     val_path = val_path[:val_num]
 
