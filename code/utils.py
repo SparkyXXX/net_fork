@@ -21,7 +21,7 @@ def config(args):
     # 日志配置
     # logging.getLogger("PIL").setLevel(logging.ERROR)
     log_path = config["utils"]["log_save_path"]
-    if args.delete_log:
+    if args.delete_past_log:
         shutil.rmtree(log_path)
         os.mkdir(log_path)
     if args.log_to_file:
@@ -73,7 +73,7 @@ class TB_settings():
 
     def train_update(self, y, x):
         self.writer.add_scalar("Loss", y, x, display_name="Training")
-
+# 
     def val_update(self, val_img_path, reason_results):
         for index, path in enumerate(val_img_path):
             val_img = np.array(Image.open(path).convert("RGB").resize((448, 448))).astype(np.uint8)

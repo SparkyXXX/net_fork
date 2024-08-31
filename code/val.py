@@ -41,11 +41,9 @@ def val(args):
                 # 读取数据，预测
                 img, label = data
                 output = torch.softmax(torch.squeeze(MyNet(img)), dim=0)
-                predict = torch.argmax(output).numpy()
+                predict = torch.argmax(output).numpy() # argmax返回最大值的索引
                 predict_results.append(predict)
                 predict_class["Img" + str(index)] = "Cat" if predict == 0 else "Dog"
-
-                # 更新显示
                 t.update()
         TB.val_update(dataset["val_img"], predict_results)
         TB.save()
@@ -57,7 +55,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("config", type=str, help="AlexNet script")
     parser.add_argument("--log_to_file", action="store_true", help="save log to txt file")
-    parser.add_argument('--delete_log', action='store_true', help='delete old log files')
+    parser.add_argument('--delete_past_log', action='store_true', help='delete old log files')
     args = parser.parse_args()
     
     # 运行

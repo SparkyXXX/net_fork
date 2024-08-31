@@ -44,14 +44,14 @@ def train(args):
                   desc="epoch:{}".format(epoch),
                   bar_format="{desc} |{bar}| {elapsed}<{remaining}, {rate_fmt} {postfix}",
                   ncols=70) as t:
-            for step, data in enumerate(train_loader, start=0):
+            for index, data in enumerate(train_loader, start=0):
                 logging.info("-------------new batch---------------")
                 # 读取数据，清零梯度，前向传播，计算损失，反向传播，更新梯度，损失累加
                 imgs, labels = data
                 # data为一个list，其中有两个tensor
                 # 一个shape为torch.Size([100, 3, 224, 224])，表示一批100张图片
                 # 另一个shape为torch.Size([100])，表示这100张图片对应的类别(0 or 1)
-                # step 用于标记枚举的轮次
+                # index 用于标记枚举的轮次
                 
                 optimizor.zero_grad()
                 out = MyNet(imgs.to(device))
@@ -66,7 +66,7 @@ def train(args):
                 TB.train_update(loss, count)
                 TB.save()
                 count += 1
-            utils.save_model(MyNet, model_save_path, del_before=args.delete_model)
+            utils.save_model(MyNet, model_save_path, del_before=args.delete_past_model)
     tqdm.write("\nTrain Finish!\n")
 
 
@@ -75,8 +75,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("config", type=str, help="AlexNet script")
     parser.add_argument("--log_to_file", action="store_true", help="save log to txt file")
-    parser.add_argument('--delete_model', action='store_true', help='delete old training results')
-    parser.add_argument('--delete_log', action='store_true', help='delete old log files')
+    parser.add_argument('--delete_past_model', action='store_true', help='delete old training results')
+    parser.add_argument('--delete_past_log', action='store_true', help='delete old log files')
     args = parser.parse_args()
     
     # 运行
