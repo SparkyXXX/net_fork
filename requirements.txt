@@ -1,0 +1,9 @@
+pyyaml
+argparse
+scipy
+tqdm
+tensorboardX
+tensorboard
+setproctitle
+numpy
+pytest-shutil

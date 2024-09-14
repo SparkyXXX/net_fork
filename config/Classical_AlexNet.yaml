@@ -1,0 +1,45 @@
+# 数据信息
+data:
+  # 指定训练和测试的文件路径
+  root_train: "/home/hrx/Classical_Network/2012-AlexNet/datasets/train/"
+  root_val: "/home/hrx/Classical_Network/2012-AlexNet/datasets/test1"
+  # 训练的batch_size
+  batch_size: 100 #hrx:batch_size=400显存会爆掉
+  # 测试的batch_size
+  test_batch: 1
+
+#设备信息
+device:
+  # 指定是GPU还是CPU，GPU是'cuda'，CPU就是''cpu'，注意引号
+  dev: "cuda"
+  #id表示使用哪块GPU, 如果上面的dev是 'cpu'，则该项无效，注意引号
+  id: "0"
+
+#训练参数
+train_params:
+  # 学习速率
+  learning_rate: 0.0001
+  # 网络权重的保存路径
+  savepath: "./results/model/"
+  # 训练轮数
+  train_epoch: 150
+  # hrx:500轮要训练25h
+
+#测试参数
+test_params:
+  # 测试集图片数量
+  test_numb: 10
+  # 模型权重文件存储路径
+  # model_weight_path: "./results/model/AlexNet-2021-01-12-10-06-45.pth"
+  model_weight_path: "./results/model/AlexNet-2024-08-25-06-13-29.pth"
+
+#日志存档参数
+log_params:
+  # 存档路径
+  logpath: "./results/log/"
+
+#Tensorboard配置
+tensorboard_params:
+  #存档路径
+  train_tpth: "./results/runs/train/"
+  test_tpth: "./results/runs/test/"
